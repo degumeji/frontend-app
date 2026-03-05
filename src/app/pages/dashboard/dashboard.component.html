@@ -4,6 +4,39 @@
     <div class="flex items-center space-x-2">
       <h1 class="text-xl font-bold text-gray-800">Sistema de Gestión</h1>
     </div>
+    
+  <div class="flex items-center space-x-8">
+
+    <div class="hidden md:flex items-center space-x-6">
+
+      <a routerLink="/"
+          routerLinkActive="text-blue-600"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+        Dashboard
+      </a>
+
+      <a routerLink="/clients"
+          routerLinkActive="text-blue-600"
+          class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+        Clientes
+      </a>
+
+      <a routerLink="/create-order"
+          routerLinkActive="text-blue-600"
+          class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+        Nueva Orden
+      </a>
+
+      <a routerLink="/orders"
+          routerLinkActive="text-blue-600"
+          class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+        Órdenes
+      </a>
+
+    </div>
+
+  </div>
 
     <button (click)="auth.logout()"
             class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-md font-medium transition-colors border border-red-200">

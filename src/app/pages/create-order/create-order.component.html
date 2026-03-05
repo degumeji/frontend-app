@@ -1,0 +1,174 @@
+<div class="min-h-screen bg-gray-50">
+  
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+
+    <div class="flex items-center space-x-8">
+
+      <h1 class="text-xl font-bold text-gray-800">
+        Sistema de Gestión
+      </h1>
+
+      <div class="hidden md:flex items-center space-x-6">
+
+        <a routerLink="/"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Dashboard
+        </a>
+
+        <a routerLink="/clients"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Clientes
+        </a>
+
+        <a routerLink="/create-order"
+           routerLinkActive="text-blue-600"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Nueva Orden
+        </a>
+
+        <a routerLink="/orders"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Órdenes
+        </a>
+
+      </div>
+    </div>
+
+    <button (click)="auth.logout()"
+            class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-md font-medium transition-colors border border-red-200">
+      Cerrar Sesión
+    </button>
+
+  </nav>
+
+  <main class="container mx-auto p-8">
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800">
+        Crear Nueva Orden
+      </h2>
+      <p class="text-gray-600">
+        Registrar una nueva orden en el sistema
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 max-w-2xl">
+      
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Cliente
+        </label>
+        <select [(ngModel)]="order.client_id"
+                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+          <option value="" disabled selected>
+            Seleccione un cliente
+          </option>
+
+          <option *ngFor="let c of clients" [value]="c.id">
+            {{c.firstName}} {{c.lastName}}
+          </option>
+
+        </select>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Fecha de Orden
+        </label>
+        <input type="date"
+               [(ngModel)]="order.orderDate"
+               class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Total
+        </label>
+        <input type="number"
+               [(ngModel)]="order.total"
+               placeholder="Ingrese el total"
+               class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+      
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Estado
+        </label>
+        <select [(ngModel)]="order.status"
+                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+          <option value="Pending">Pendiente</option>
+          <option value="Completed">Completada</option>
+          <option value="Cancelled">Cancelada</option>
+
+        </select>
+      </div>
+      
+      <div>
+        <button (click)="save()"
+                class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+          Guardar Orden
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+    
+  <div *ngIf="showSuccessModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+
+        <div class="flex items-center space-x-3 mb-4">
+        <div class="bg-green-100 text-green-600 rounded-full p-2">
+            ✓
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800">
+            Éxito
+        </h3>
+        </div>
+
+        <p class="text-gray-600 mb-6">
+        {{ message }}
+        </p>
+
+        <div class="text-right">
+        <button (click)="closeModal()"
+                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition">
+            Aceptar
+        </button>
+        </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="showErrorModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+
+        <div class="flex items-center space-x-3 mb-4">
+        <div class="bg-red-100 text-red-600 rounded-full p-2">
+            ⚠
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800">
+            Error
+        </h3>
+        </div>
+
+        <p class="text-gray-600 mb-6">
+        {{ message }}
+        </p>
+
+        <div class="text-right">
+        <button (click)="closeModal()"
+                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition">
+            Cerrar
+        </button>
+        </div>
+
+    </div>
+
+  </div>
+
+</div>

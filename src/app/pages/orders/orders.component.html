@@ -1,0 +1,153 @@
+<div class="min-h-screen bg-gray-50">
+  
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+
+    <div class="flex items-center space-x-8">
+
+      <h1 class="text-xl font-bold text-gray-800">
+        Sistema de Gestión
+      </h1>
+
+      <div class="hidden md:flex items-center space-x-6">
+
+        <a routerLink="/"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Dashboard
+        </a>
+
+        <a routerLink="/clients"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Clientes
+        </a>
+
+        <a routerLink="/create-order"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Nueva Orden
+        </a>
+
+        <a routerLink="/orders"
+           routerLinkActive="text-blue-600"
+           class="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+          Órdenes
+        </a>
+
+      </div>
+    </div>
+
+    <button (click)="auth.logout()"
+            class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-md font-medium transition-colors border border-red-200">
+      Cerrar Sesión
+    </button>
+
+  </nav>
+
+  <main class="container mx-auto p-8">
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800">
+        Listado de Órdenes
+      </h2>
+      <p class="text-gray-600">
+        Visualización de todas las órdenes registradas
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+
+      <table class="min-w-full divide-y divide-gray-200">
+
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+              ID
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+              Cliente
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+              Fecha
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+              Total
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+              Estado
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y divide-gray-100">
+
+          <tr *ngFor="let o of orders" class="hover:bg-gray-50 transition">
+
+            <td class="px-6 py-4 text-sm text-gray-700">
+              {{o.id}}
+            </td>
+
+            <td class="px-6 py-4 text-sm font-medium text-gray-800">
+              {{o.client.firstName}} {{o.client.lastName}}
+            </td>
+
+            <td class="px-6 py-4 text-sm text-gray-600">
+              {{o.orderDate | date:'mediumDate'}}
+            </td>
+
+            <td class="px-6 py-4 text-sm font-semibold text-gray-800">
+              $ {{o.total}}
+            </td>
+
+            <td class="px-6 py-4 text-sm">
+
+              <!-- BADGE DINÁMICO -->
+              <span
+                [ngClass]="{
+                  'bg-yellow-100 text-yellow-700 border-yellow-200': o.status === 'Pending',
+                  'bg-green-100 text-green-700 border-green-200': o.status === 'Completed',
+                  'bg-red-100 text-red-700 border-red-200': o.status === 'Cancelled'
+                }"
+                class="px-3 py-1 rounded-full text-xs font-medium border">
+
+                {{o.status}}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </main>
+
+  <div *ngIf="showErrorModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+
+        <div class="flex items-center space-x-3 mb-4">
+        <div class="bg-red-100 text-red-600 rounded-full p-2">
+            ⚠
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800">
+            Error
+        </h3>
+        </div>
+
+        <p class="text-gray-600 mb-6">
+        {{ errorMessage }}
+        </p>
+
+        <div class="text-right">
+        <button (click)="closeModal()"
+                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition">
+            Cerrar
+        </button>
+        </div>
+
+    </div>
+    
+  </div>
+</div>
